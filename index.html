@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Mời Tốt Nghiệp 2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cream: #FAF8F5;
+            --beige: #EDE7DA;
+            --warm-white: #F5F0E8;
+            --burgundy: #8B1A2E;
+            --burgundy-light: #A82340;
+            --gold: #C9A84C;
+            --gold-light: #E2C97E;
+            --dark: #2C2416;
+            --text: #3D3026;
+            --muted: #7A6D5E;
+            --border: #D4C9B5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ===== LEAVES ===== */
+        #leaves-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ===== INTRO ANIMATION ===== */
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: #1A0A10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+
+        #intro.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-scene {
+            position: relative;
+            width: min(360px, 90vw);
+            height: min(500px, 85vh);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Envelope */
+        .envelope {
+            position: absolute;
+            width: 280px;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-60px);
+            opacity: 0;
+            animation: envelopeDrop 1s ease 0.5s forwards;
+        }
+
+        @keyframes envelopeDrop {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-80px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .envelope svg {
+            width: 100%;
+        }
+
+        /* Invitation card */
+        .invite-card {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            opacity: 0;
+            width: 260px;
+            background: var(--warm-white);
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            text-align: center;
+            animation: cardReveal 1s ease 1.8s forwards;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .invite-card::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px dashed var(--border);
+            pointer-events: none;
+        }
+
+        @keyframes cardReveal {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .invite-card p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Class of 2026 overlay */
+        #class-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, #1A0A10 0%, #2C0F1A 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: classShow 1.2s ease 3.8s forwards;
+            border-radius: 4px;
+        }
+
+        @keyframes classShow {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .class-text-script {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
+            color: var(--warm-white);
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        .class-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--warm-white);
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-top: 8px;
+        }
+
+        .class-detail {
+            margin-top: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .class-detail span {
+            display: block;
+            margin: 2px 0;
+        }
+
+        .class-date-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .class-date-row .big-date {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--warm-white);
+        }
+
+        .class-date-row .side-text {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .skip-btn {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            border: none;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .skip-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--burgundy);
+            font-style: italic;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--burgundy);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 105;
+            padding: 0;
+        }
+
+        .mobile-menu-btn span {
+            width: 100%;
+            height: 2px;
+            background-color: var(--burgundy);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left center;
+        }
+
+        /* Hamburger Animation */
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(2px, -2px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            width: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(2px, 2px);
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(250, 248, 245, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.08);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 32px;
+                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 100;
+                border-left: 1px solid var(--border);
+                padding: 40px;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.05rem;
+                letter-spacing: 2px;
+                display: block;
+                padding: 8px 0;
+            }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(170deg, #1A0A10 0%, #2C0F1A 50%, #3D1520 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 24px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+        }
+
+        .hero-script {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 10vw, 5rem);
+            color: var(--warm-white);
+            display: block;
+            line-height: 1;
+        }
+
+        .hero-year {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 14vw, 8rem);
+            font-weight: 700;
+            color: var(--warm-white);
+            letter-spacing: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 28px auto;
+        }
+
+        .hero-meta {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 2.2;
+        }
+
+        .hero-meta strong {
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            margin-top: 36px;
+            padding: 14px 40px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 80px 24px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin-bottom: 28px;
+        }
+
+        /* ===== DETAILS SECTION ===== */
+        #details {
+            background: var(--cream);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        @media (max-width: 480px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-card {
+            background: var(--warm-white);
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            position: relative;
+        }
+
+        .detail-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        .detail-icon {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .detail-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .detail-sub {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ===== COUNTDOWN ===== */
+        #countdown-section {
+            background: var(--beige);
+            text-align: center;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 36px 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: var(--cream);
+            border: 1px solid var(--border);
+            padding: 20px 18px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .countdown-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--burgundy);
+            display: block;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* ===== MAP ===== */
+        #map-section {
+            background: var(--cream);
+        }
+
+        .map-wrapper {
+            margin-top: 28px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            display: block;
+        }
+
+        .map-address {
+            background: var(--warm-white);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .map-address p {
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .map-address p strong {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--burgundy);
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .map-btn:hover {
+            background: var(--burgundy-light);
+        }
+
+        /* ===== RSVP ===== */
+        #rsvp-section {
+            background: var(--beige);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▾';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--burgundy);
+            color: white;
+            border: none;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--burgundy-light);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 32px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+        }
+
+        .form-success.show {
+            display: block;
+        }
+
+        .form-success h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--burgundy);
+            margin-bottom: 8px;
+        }
+
+        /* ===== WISHES ===== */
+        #wishes-section {
+            background: var(--cream);
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        @media (max-width: 480px) {
+            .wishes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .wish-card {
+            background: var(--warm-white);
+            border: 1px solid var(--border);
+            padding: 20px;
+            position: relative;
+        }
+
+        .wish-card::before {
+            content: '"';
+            position: absolute;
+            top: 8px;
+            left: 14px;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            line-height: 1;
+            opacity: 0.4;
+        }
+
+        .wish-text {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--text);
+            padding-top: 20px;
+        }
+
+        .wish-name {
+            margin-top: 12px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .wish-attending {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 3px 10px;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: var(--beige);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .wish-attending.yes {
+            background: rgba(139, 26, 46, 0.08);
+            color: var(--burgundy);
+            border-color: rgba(139, 26, 46, 0.2);
+        }
+
+        .no-wishes {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 0.875rem;
+            grid-column: 1/-1;
+            background: var(--warm-white);
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #1A0A10;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        footer .footer-logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            line-height: 2;
+        }
+
+        footer a {
+            color: var(--gold-light);
+            text-decoration: none;
+        }
+
+        /* ===== ADMIN PAGE ===== */
+        #admin-page {
+            display: none;
+            min-height: 100vh;
+            background: var(--cream);
+        }
+
+        #admin-page.show {
+            display: block;
+        }
+
+        .admin-header {
+            background: #1A0A10;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light);
+            font-size: 1.4rem;
+            font-style: italic;
+        }
+
+        .admin-header button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .admin-body {
+            padding: 40px 32px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-body {
+                padding: 24px 16px;
+            }
+        }
+
+        .stat-card {
+            background: var(--warm-white);
+            border: 1px solid var(--border);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--burgundy);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .admin-table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .admin-table th {
+            background: #1A0A10;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 400;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table tr:hover td {
+            background: var(--beige);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            border-radius: 2px;
+        }
+
+        .badge-yes {
+            background: rgba(139, 26, 46, 0.1);
+            color: var(--burgundy);
+        }
+
+        .badge-no {
+            background: var(--beige);
+            color: var(--muted);
+        }
+
+        .badge-maybe {
+            background: rgba(201, 168, 76, 0.15);
+            color: #8B6914;
+        }
+
+        .admin-clear-btn {
+            margin-top: 24px;
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid #cc3333;
+            color: #cc3333;
+            font-size: 0.75rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .admin-clear-btn:hover {
+            background: #cc3333;
+            color: white;
+        }
+
+        /* ===== ADMIN LOGIN ===== */
+        #admin-login {
+            min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: #1A0A10;
+        }
+
+        #admin-login.show {
+            display: flex;
+        }
+
+        .login-box {
+            background: var(--cream);
+            padding: 48px 40px;
+            width: min(400px, 90vw);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .login-box p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--beige);
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .login-box input:focus {
+            border-color: var(--gold);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--burgundy);
+            color: white;
+            border: none;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .login-error {
+            color: var(--burgundy);
+            font-size: 0.8rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            * {
+                animation-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Leaves Canvas -->
+    <canvas id="leaves-canvas"></canvas>
+
+    <!-- ===== INTRO ANIMATION ===== -->
+    <div id="intro">
+        <div class="intro-scene">
+            <!-- Red Envelope SVG -->
+            <div class="envelope">
+                <svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Envelope body -->
+                    <rect x="0" y="20" width="280" height="160" rx="4" fill="#8B1A2E" />
+                    <!-- Envelope flap (open) -->
+                    <polygon points="0,20 140,100 280,20" fill="#A82340" />
+                    <!-- Envelope bottom fold lines -->
+                    <polygon points="0,180 100,100 0,20" fill="#6B1422" opacity="0.7" />
+                    <polygon points="280,180 180,100 280,20" fill="#6B1422" opacity="0.7" />
+                    <!-- Bottom triangle -->
+                    <polygon points="0,180 140,105 280,180" fill="#7A1728" />
+                    <!-- Wax seal -->
+                    <circle cx="140" cy="130" r="18" fill="#C9A84C" opacity="0.9" />
+                    <text x="140" y="135" text-anchor="middle" fill="#1A0A10" font-size="16"
+                        font-family="serif">❧</text>
+                </svg>
+            </div>
+
+            <!-- Invitation Card -->
+            <div class="invite-card">
+                <p>You're invited<br>to my<br>Graduation</p>
+            </div>
+
+            <!-- Class of 2026 overlay -->
+            <div id="class-overlay">
+                <span class="hero-eyebrow" style="font-size:0.6rem;letter-spacing:4px;color:rgba(201,168,76,0.7)">ĐẠI
+                    HỌC GIAO THÔNG VẬN TẢI</span>
+                <span class="class-text-script">Class of</span>
+                <span class="class-year">2026</span>
+                <div
+                    style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;width:200px;margin-left:auto;margin-right:auto;">
+                    <div class="class-date-row" style="justify-content:center">
+                        <div class="side-text" style="text-align:right;color:rgba(255,255,255,0.5)">Thứ Bảy<br>Tháng 06
+                        </div>
+                        <div class="big-date">27</div>
+                        <div class="side-text" style="color:rgba(255,255,255,0.5)">11:30 SA<br>2026</div>
+                    </div>
+                    <div class="class-detail" style="margin-top:10px">
+                        <span>ĐẠI HỌC GIAO THÔNG VẬN TẢI</span>
+                        <span>CƠ SỞ TP. HỒ CHÍ MINH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="skip-btn" onclick="skipIntro()">Bỏ qua →</button>
+    </div>
+
+    <!-- ===== ADMIN LOGIN ===== -->
+    <div id="admin-login">
+        <div class="login-box">
+            <h2>Trang Quản Trị</h2>
+            <p>Nhập mật khẩu để tiếp tục</p>
+            <input type="password" id="admin-password" placeholder="Mật khẩu"
+                onkeydown="if(event.key==='Enter')adminLogin()">
+            <button class="login-btn" onclick="adminLogin()">Đăng nhập</button>
+            <p class="login-error" id="login-error">Mật khẩu không đúng</p>
+            <div style="margin-top:20px">
+                <a href="#" onclick="showMain(); return false;"
+                    style="font-size:0.75rem;color:var(--muted);text-decoration:none">← Quay lại thiệp mời</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN PAGE ===== -->
+    <div id="admin-page">
+        <div class="admin-header">
+            <h1>Admin — Danh sách tham dự</h1>
+            <button onclick="showMain()">← Về thiệp mời</button>
+        </div>
+        <div class="admin-body">
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <span class="stat-num" id="stat-total">0</span>
+                    <span class="stat-label">Tổng phản hồi</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-num" id="stat-attending">0</span>
+                    <span class="stat-label">Sẽ tham dự</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-num" id="stat-decline">0</span>
+                    <span class="stat-label">Không tham dự</span>
+                </div>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Họ tên</th>
+                            <th>Tham dự</th>
+                            <th>Lời chúc</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align:center;padding:32px;color:var(--muted)">Chưa có phản hồi
+                                nào</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="admin-clear-btn" onclick="clearAllData()">🗑 Xoá tất cả dữ liệu</button>
+
+            <div style="margin-top:16px;font-size:0.75rem;color:var(--muted)">
+                Dữ liệu lưu trữ cục bộ trong trình duyệt này. Để chia sẻ với thiết bị khác, hãy xuất file.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div id="main-content">
+        <nav>
+            <span class="nav-logo">Tốt Nghiệp 2026</span>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#details" onclick="closeMobileMenu()">Chi tiết</a></li>
+                <li><a href="#map-section" onclick="closeMobileMenu()">Địa điểm</a></li>
+                <li><a href="#rsvp-section" onclick="closeMobileMenu()">RSVP</a></li>
+            </ul>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <p class="hero-eyebrow">Trường Đại Học Giao Thông Vận Tải — TP. HCM</p>
+                <span class="hero-script">Class of</span>
+                <span class="hero-year">2026</span>
+                <div class="hero-divider"></div>
+                <p class="hero-meta">
+                    <strong>Thứ Bảy, 27 Tháng 06 Năm 2026</strong>
+                    11:30 Sáng<br>
+                    Trường ĐH Giao Thông Vận Tải — Cơ Sở TP. Hồ Chí Minh<br>
+                    2 Đường Hoàng Văn Thụ, Phường 4, Tân Bình
+                </p>
+                <a href="#rsvp-section" class="hero-cta">Xác nhận tham dự</a>
+            </div>
+        </section>
+
+        <!-- DETAILS -->
+        <section id="details">
+            <div class="container fade-in">
+                <span class="section-eyebrow">Thông tin lễ tốt nghiệp</span>
+                <h2 class="section-title">Chi tiết buổi lễ</h2>
+                <div class="section-divider"></div>
+
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <span class="detail-icon">📅</span>
+                        <span class="detail-label">Ngày tổ chức</span>
+                        <div class="detail-value">27 Tháng 06, 2026</div>
+                        <div class="detail-sub">Thứ Bảy</div>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">🕐</span>
+                        <span class="detail-label">Giờ bắt đầu</span>
+                        <div class="detail-value">11:30 Sáng</div>
+                        <div class="detail-sub">Vui lòng có mặt trước 15 phút</div>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">🏛️</span>
+                        <span class="detail-label">Địa điểm</span>
+                        <div class="detail-value">ĐH Giao Thông Vận Tải</div>
+                        <div class="detail-sub">Cơ sở TP. Hồ Chí Minh</div>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">🎓</span>
+                        <span class="detail-label">Khoá học</span>
+                        <div class="detail-value">Class of 2026</div>
+                        <div class="detail-sub">Lễ trao bằng tốt nghiệp</div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top:28px;background:var(--warm-white);border:1px solid var(--border);padding:24px;border-left:3px solid var(--gold)">
+                    <p
+                        style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--dark);line-height:1.8">
+                        "Những cố gắng của em hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn
+                        bè, anh chị trong ngày trọng đại này!"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN -->
+        <section id="countdown-section">
+            <div class="container fade-in" style="text-align:center">
+                <span class="section-eyebrow">Đếm ngược thời gian</span>
+                <h2 class="section-title" style="text-align:center">Còn bao lâu nữa?</h2>
+                <div class="section-divider" style="margin:0 auto 0"></div>
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <span class="countdown-num" id="cd-days">--</span>
+                        <span class="countdown-label">Ngày</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-num" id="cd-hours">--</span>
+                        <span class="countdown-label">Giờ</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-num" id="cd-mins">--</span>
+                        <span class="countdown-label">Phút</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-num" id="cd-secs">--</span>
+                        <span class="countdown-label">Giây</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAP -->
+        <section id="map-section">
+            <div class="container fade-in">
+                <span class="section-eyebrow">Địa điểm</span>
+                <h2 class="section-title">Xem đường đi</h2>
+                <div class="section-divider"></div>
+
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1234!2d106.6504!3d10.8012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528d2fc8afa2f%3A0x3a2b5a3e3e3e3e3e!2s2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5%2C%20Ph%C6%B0%E1%BB%9Dng%204%2C%20T%C3%A2n%20B%C3%ACnh%2C%20Th%C3%A0nh%20ph%E1%BB%91%20H%E1%BB%93%20Ch%C3%AD%20Minh!5e0!3m2!1svi!2svn!4v1234567890"
+                        loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="map-address">
+                        <p>
+                            <strong>Trường ĐH Giao Thông Vận Tải — Cơ Sở TP.HCM</strong>
+                            2 Đường Hoàng Văn Thụ, Phường 4, Tân Bình, TP. Hồ Chí Minh
+                        </p>
+                        <a href="https://maps.google.com/?q=2+Hoang+Van+Thu+Tan+Binh+Ho+Chi+Minh" target="_blank"
+                            class="map-btn">
+                            ❤️ Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp-section">
+            <div class="container fade-in">
+                <span class="section-eyebrow">Xác nhận tham dự</span>
+                <h2 class="section-title">Gửi lời chúc của bạn</h2>
+                <div class="section-divider"></div>
+
+                <div id="rsvp-form-wrap">
+                    <div class="form-group">
+                        <label>Họ và tên *</label>
+                        <input type="text" id="guest-name" placeholder="Nhập tên của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label>Bạn sẽ tham dự không? *</label>
+                        <div class="select-wrapper">
+                            <select id="guest-attend">
+                                <option value="">— Chọn —</option>
+                                <option value="yes">✅ Có, tôi sẽ tham dự</option>
+                                <option value="no">❌ Rất tiếc, tôi không đến được</option>
+                                <option value="maybe">🤔 Có thể sẽ đến</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Gửi lời chúc đến mình nhé 💌</label>
+                        <textarea id="guest-wish" placeholder="Viết lời chúc của bạn tại đây..."></textarea>
+                    </div>
+                    <button class="btn-submit" onclick="submitRSVP()">❤️ Gửi lời chúc của bạn ❤️</button>
+                </div>
+
+                <div class="form-success" id="rsvp-success">
+                    <h3>Cảm ơn bạn! 🎉</h3>
+                    <p style="color:var(--muted);margin-top:8px">Lời chúc của bạn đã được ghi nhận. Hẹn gặp bạn trong
+                        ngày trọng đại!</p>
+                    <button onclick="resetForm()"
+                        style="margin-top:16px;padding:10px 24px;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;font-size:0.75rem;letter-spacing:2px">Gửi
+                        thêm</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- WISHES -->
+        <section id="wishes-section">
+            <div class="container fade-in">
+                <span class="section-eyebrow">Lời chúc</span>
+                <h2 class="section-title">Xem lời chúc của mọi người</h2>
+                <div class="section-divider"></div>
+                <div class="wishes-grid" id="wishes-grid">
+                    <div class="no-wishes">
+                        <span style="font-size: 1.8rem; opacity: 0.25; display: block; margin: 0 auto;">💌</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <span class="footer-logo">Class of 2026</span>
+            <p>Trường Đại Học Giao Thông Vận Tải · Cơ Sở TP. Hồ Chí Minh</p>
+            <p style="margin-top:8px">27 Tháng 06, 2026 · 11:30 Sáng</p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== LEAVES ANIMATION =====
+        const canvas = document.getElementById('leaves-canvas');
+        const ctx = canvas.getContext('2d');
+        let leaves = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const LEAF_COLORS = [
+            '#C9A84C', '#E2C97E', '#D4B896', '#8B6040',
+            '#C4873A', '#E8D5A3', '#B87333', '#D4A853'
+        ];
+
+        function createLeaf() {
+            return {
+                x: Math.random() * canvas.width,
+                y: -20,
+                size: 8 + Math.random() * 12,
+                color: LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)],
+                vx: (Math.random() - 0.5) * 1.2,
+                vy: 0.6 + Math.random() * 1.2,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.06,
+                opacity: 0.6 + Math.random() * 0.4,
+                swing: Math.random() * Math.PI * 2,
+                swingSpeed: 0.02 + Math.random() * 0.02
+            };
+        }
+
+        function drawLeaf(l) {
+            ctx.save();
+            ctx.translate(l.x, l.y);
+            ctx.rotate(l.rotation);
+            ctx.globalAlpha = l.opacity;
+            ctx.fillStyle = l.color;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, l.size / 2, l.size / 3.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+            // leaf vein
+            ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(-l.size / 2, 0);
+            ctx.lineTo(l.size / 2, 0);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function animateLeaves() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.04 && leaves.length < 40) {
+                leaves.push(createLeaf());
+            }
+
+            leaves = leaves.filter(l => l.y < canvas.height + 30);
+
+            leaves.forEach(l => {
+                l.swing += l.swingSpeed;
+                l.x += l.vx + Math.sin(l.swing) * 0.6;
+                l.y += l.vy;
+                l.rotation += l.rotationSpeed;
+                drawLeaf(l);
+            });
+
+            requestAnimationFrame(animateLeaves);
+        }
+        animateLeaves();
+
+        // ===== INTRO =====
+        let introFinished = false;
+
+        function showMain() {
+            if (window.location.pathname === '/admin') {
+                history.pushState(null, null, '/');
+            } else if (window.location.hash === '#admin') {
+                history.replaceState(null, null, ' ');
+            }
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('admin-login').classList.remove('show');
+            document.getElementById('admin-page').classList.remove('show');
+            document.getElementById('main-content').classList.add('visible');
+            introFinished = true;
+            initObserver();
+            startCountdown();
+            loadWishes();
+        }
+
+        function skipIntro() {
+            const intro = document.getElementById('intro');
+            intro.classList.add('fade-out');
+            setTimeout(showMain, 800);
+        }
+
+        // Auto-finish intro after all animations
+        setTimeout(() => {
+            if (!introFinished) {
+                const intro = document.getElementById('intro');
+                intro.classList.add('fade-out');
+                setTimeout(showMain, 800);
+            }
+        }, 6200);
+
+        // ===== ADMIN =====
+        const ADMIN_PASS = 'totnghiep2026';
+
+        function goAdmin() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('main-content').classList.remove('visible');
+            document.getElementById('admin-page').classList.remove('show');
+            document.getElementById('admin-login').classList.add('show');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('login-error').style.display = 'none';
+        }
+
+        function adminLogin() {
+            const pw = document.getElementById('admin-password').value;
+            if (pw === ADMIN_PASS) {
+                document.getElementById('admin-login').classList.remove('show');
+                document.getElementById('admin-page').classList.add('show');
+                loadAdminData();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function loadAdminData() {
+            const guests = getGuests();
+            const tbody = document.getElementById('admin-tbody');
+            const total = guests.length;
+            const attending = guests.filter(g => g.attend === 'yes').length;
+            const decline = guests.filter(g => g.attend === 'no').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-attending').textContent = attending;
+            document.getElementById('stat-decline').textContent = decline;
+
+            if (total === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--muted)">Chưa có phản hồi nào</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = guests.map((g, i) => {
+                const badgeClass = g.attend === 'yes' ? 'badge-yes' : g.attend === 'no' ? 'badge-no' : 'badge-maybe';
+                const attendText = g.attend === 'yes' ? 'Sẽ đến' : g.attend === 'no' ? 'Không đến' : 'Có thể';
+                const date = new Date(g.time);
+                const timeStr = date.toLocaleString('vi-VN');
+                return `<tr>
+      <td style="color:var(--muted)">${i + 1}</td>
+      <td><strong>${escapeHtml(g.name)}</strong></td>
+      <td><span class="badge ${badgeClass}">${attendText}</span></td>
+      <td style="max-width:300px;font-size:0.82rem;color:var(--muted)">${escapeHtml(g.wish || '—')}</td>
+      <td style="white-space:nowrap;font-size:0.75rem;color:var(--muted)">${timeStr}</td>
+    </tr>`;
+            }).join('');
+        }
+
+        function clearAllData() {
+            if (confirm('Bạn có chắc muốn xoá tất cả dữ liệu?')) {
+                localStorage.removeItem('graduation_guests');
+                loadAdminData();
+                loadWishes();
+            }
+        }
+
+        // ===== LOCAL STORAGE =====
+        function getGuests() {
+            try { return JSON.parse(localStorage.getItem('graduation_guests') || '[]'); }
+            catch { return []; }
+        }
+
+        function saveGuest(guest) {
+            const guests = getGuests();
+            guests.unshift(guest);
+            localStorage.setItem('graduation_guests', JSON.stringify(guests));
+        }
+
+        // ===== RSVP =====
+        function submitRSVP() {
+            const name = document.getElementById('guest-name').value.trim();
+            const attend = document.getElementById('guest-attend').value;
+            const wish = document.getElementById('guest-wish').value.trim();
+
+            if (!name) { alert('Vui lòng nhập tên của bạn'); return; }
+            if (!attend) { alert('Vui lòng chọn xem bạn có tham dự không'); return; }
+
+            const guest = { name, attend, wish, time: Date.now() };
+            saveGuest(guest);
+
+            document.getElementById('rsvp-form-wrap').style.display = 'none';
+            document.getElementById('rsvp-success').classList.add('show');
+            loadWishes();
+        }
+
+        function resetForm() {
+            document.getElementById('guest-name').value = '';
+            document.getElementById('guest-attend').value = '';
+            document.getElementById('guest-wish').value = '';
+            document.getElementById('rsvp-form-wrap').style.display = 'block';
+            document.getElementById('rsvp-success').classList.remove('show');
+        }
+
+        // ===== WISHES =====
+        function loadWishes() {
+            const guests = getGuests().filter(g => g.wish);
+            const grid = document.getElementById('wishes-grid');
+
+            if (guests.length === 0) {
+                grid.innerHTML = '<div class="no-wishes"><span style="font-size: 1.8rem; opacity: 0.25; display: block; margin: 0 auto;">💌</span></div>';
+                return;
+            }
+
+            grid.innerHTML = guests.map(g => {
+                const badgeClass = g.attend === 'yes' ? 'yes' : '';
+                const attendText = g.attend === 'yes' ? '✅ Sẽ tham dự' : g.attend === 'no' ? '❌ Không đến được' : '🤔 Có thể đến';
+                return `<div class="wish-card">
+      <p class="wish-text">${escapeHtml(g.wish)}</p>
+      <p class="wish-name">${escapeHtml(g.name)}</p>
+      <span class="wish-attending ${badgeClass}">${attendText}</span>
+    </div>`;
+            }).join('');
+        }
+
+        // ===== COUNTDOWN =====
+        function startCountdown() {
+            const target = new Date('2026-06-27T11:30:00');
+
+            function update() {
+                const now = new Date();
+                const diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById('cd-days').textContent = '00';
+                    document.getElementById('cd-hours').textContent = '00';
+                    document.getElementById('cd-mins').textContent = '00';
+                    document.getElementById('cd-secs').textContent = '00';
+                    return;
+                }
+
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+
+                document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        // ===== SCROLL ANIMATIONS =====
+        function initObserver() {
+            const els = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.15 });
+            els.forEach(el => observer.observe(el));
+        }
+
+        // ===== UTILS =====
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ===== MOBILE MENU CONTROLS =====
+        function toggleMobileMenu() {
+            const btn = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('nav-links');
+            btn.classList.toggle('active');
+            menu.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            const btn = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('nav-links');
+            if (btn && menu) {
+                btn.classList.remove('active');
+                menu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Check if URL has #admin or /admin, or if it changes
+        function checkHash() {
+            if (window.location.pathname === '/admin' || window.location.hash === '#admin') {
+                goAdmin();
+            } else {
+                if (introFinished && !document.getElementById('main-content').classList.contains('visible')) {
+                    showMain();
+                }
+            }
+        }
+        window.addEventListener('hashchange', checkHash);
+        window.addEventListener('popstate', checkHash);
+        window.addEventListener('load', checkHash);
+    </script>
+</body>
+
+</html>
