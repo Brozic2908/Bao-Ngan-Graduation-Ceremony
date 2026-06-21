@@ -51,6 +51,15 @@
             z-index: 0;
         }
 
+        #yt-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            left: -9999px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
         /* ── NAV ── */
         .nav-admin {
             position: fixed;
@@ -148,34 +157,7 @@
             background: rgba(255, 255, 255, 0.28);
         }
 
-        /* ── FLASH ── */
-        #flash-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: #fff;
-            z-index: 700;
-            pointer-events: none;
-        }
-
-        #flash-overlay.flash {
-            display: block;
-            animation: flashAnim 0.6s ease forwards;
-        }
-
-        @keyframes flashAnim {
-            0% {
-                opacity: 0
-            }
-
-            25% {
-                opacity: 1
-            }
-
-            100% {
-                opacity: 0
-            }
-        }
+        /* ── FLASH REMOVED ── */
 
         /* ══════════════════════════════
            BACKGROUND TEXT
@@ -256,6 +238,14 @@
             justify-content: center;
             min-height: 100vh;
             padding: 15px 10px;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            opacity: 1;
+        }
+
+        #scene.fade-out {
+            opacity: 0;
+            transform: scale(0.96);
+            pointer-events: none;
         }
 
         /* ── ENVELOPE CONTAINER ── */
@@ -267,7 +257,7 @@
             cursor: pointer;
             user-select: none;
             filter: drop-shadow(0 15px 40px rgba(44, 74, 114, 0.2));
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, aspect-ratio 0.6s cubic-bezier(0.25, 1, 0.25, 1);
         }
 
         #envelope-wrapper:active {
@@ -278,7 +268,8 @@
         #envelope-closed {
             width: 100%;
             height: 100%;
-            display: block;
+            opacity: 1;
+            transition: opacity 0.4s ease;
         }
 
         .closed-env-img {
@@ -290,18 +281,23 @@
 
         /* TRẠNG THÁI MỞ */
         #envelope-opened {
-            display: none;
-            position: relative;
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
 
         #envelope-wrapper.opened #envelope-closed {
-            display: none;
+            opacity: 0;
+            pointer-events: none;
         }
 
         #envelope-wrapper.opened #envelope-opened {
-            display: block;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .open-env-back {
@@ -434,11 +430,14 @@
            SCENE 2 – THIỆP TO (Ảnh đứng)
         ══════════════════════════════ */
         #full-card-scene {
-            display: none;
+            display: flex;
+            opacity: 0;
+            pointer-events: none;
             position: fixed;
             inset: 0;
             z-index: 100;
-            background: transparent;
+            background: rgba(238, 247, 252, 0.4);
+            backdrop-filter: blur(0px);
             overflow: hidden;
             /* Không cần cuộn vì đã fit khít */
             padding: 4px;
@@ -448,23 +447,13 @@
             justify-content: center;
             height: 100vh;
             width: 100vw;
+            transition: opacity 0.8s ease, backdrop-filter 0.8s ease;
         }
 
         #full-card-scene.show {
-            display: flex;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.96)
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1)
-            }
+            opacity: 1;
+            pointer-events: auto;
+            backdrop-filter: blur(5px);
         }
 
         /* Nút quay lại – trên cùng */
@@ -857,15 +846,12 @@
 <body>
 
     <canvas id="bubbleCanvas"></canvas>
-    <audio id="audio-player"
-        src="https://archive.org/download/westlifebeautifulinwhite_201911/Westlife%20-%20Beautiful%20in%20White.mp3"
-        loop></audio>
-    <div id="flash-overlay"></div>
+    <div id="yt-player"></div>
 
     <!-- Music bar -->
     <div id="music-bar">
         <span class="music-icon">🎵</span>
-        <span class="music-title">Beautiful in White – Westlife</span>
+        <span class="music-title">Vỗ Tay – Phương Ly</span>
         <button class="music-toggle" id="music-toggle" onclick="toggleMusic()">⏸</button>
     </div>
 
@@ -1011,49 +997,55 @@
             // Ẩn hint
             document.getElementById('hintText').style.opacity = '0';
 
-            // Hiệu ứng nháy (flash) nhẹ nhanh
-            const f = document.getElementById('flash-overlay');
-            f.classList.add('flash');
+            const w = document.getElementById('envelope-wrapper');
+            w.classList.add('opened');
+            w.style.aspectRatio = '656 / 743'; // Thay đổi tỉ lệ sang đứng
 
-            // Ở giữa thời gian nháy (300ms), chuyển đổi giao diện từ đóng sang mở
+            // Khởi động nhạc ngay lập tức khi click mở thiệp
+            startMusic();
+
+            // Chờ phong bì chuyển trạng thái mở mượt mà (400ms) rồi bắt đầu rút thư
             setTimeout(() => {
-                const w = document.getElementById('envelope-wrapper');
-                w.classList.add('opened');
-                w.style.aspectRatio = '656 / 743'; // Thay đổi tỉ lệ sang đứng
-            }, 300);
-
-            // Sau khi nháy xong (600ms), chạy nhạc và chạy hiệu ứng rút thư
-            setTimeout(() => {
-                f.classList.remove('flash');
-                startMusic();
-
-                // Bắt đầu rút thư
                 const c = document.getElementById('card-pullout');
                 c.style.opacity = '1';
                 c.classList.add('pulling');
                 phase = 'pulling';
-            }, 600);
+            }, 400);
 
-            // Sau 3.8s, flash rồi hiện thiệp to
+            // Chờ rút thư xong (tổng cộng 3.2s) rồi hiện thiệp to mượt mà
             setTimeout(() => {
-                f.classList.add('flash');
-                setTimeout(() => {
-                    f.classList.remove('flash');
-                    showFullCard();
-                }, 600);
-            }, 3800);
+                showFullCard();
+            }, 3200);
         }
 
         function showFullCard() {
             phase = 'full';
-            document.getElementById('scene').style.display = 'none';
-            document.getElementById('full-card-scene').classList.add('show');
+            const scene = document.getElementById('scene');
+            const fullCard = document.getElementById('full-card-scene');
+
+            scene.classList.add('fade-out');
+            fullCard.classList.add('show');
+
+            setTimeout(() => {
+                if (phase === 'full') {
+                    scene.style.display = 'none';
+                }
+            }, 800);
             window.scrollTo(0, 0);
         }
 
         function backToEnvelope() {
             phase = 'closed';
-            document.getElementById('full-card-scene').classList.remove('show');
+            const scene = document.getElementById('scene');
+            const fullCard = document.getElementById('full-card-scene');
+
+            scene.style.display = 'flex';
+            // Force reflow
+            scene.offsetHeight;
+
+            scene.classList.remove('fade-out');
+            fullCard.classList.remove('show');
+
             const w = document.getElementById('envelope-wrapper');
             w.classList.remove('opened');
             w.style.aspectRatio = '658 / 498'; // Trả về tỉ lệ ngang đóng
@@ -1062,14 +1054,16 @@
             c.style.opacity = '0';
             c.style.transform = 'translateY(12%) scale(0.95) rotate(0deg)';
             document.getElementById('hintText').style.opacity = '1';
-            document.getElementById('scene').style.display = 'flex';
+
             window.scrollTo(0, 0);
         }
 
         // ══════════ PAGE NAV ══════════
         function showAdmin() {
             currentPage = 'admin';
-            document.getElementById('scene').style.display = 'none';
+            const scene = document.getElementById('scene');
+            scene.classList.add('fade-out');
+            scene.style.display = 'none';
             document.getElementById('full-card-scene').classList.remove('show');
             document.getElementById('admin-page').classList.add('show');
             const toggle = document.getElementById('navToggle');
@@ -1081,11 +1075,16 @@
             document.getElementById('admin-page').classList.remove('show');
             const toggle = document.getElementById('navToggle');
             if (toggle) toggle.textContent = '⚙ Admin';
+            const scene = document.getElementById('scene');
             if (phase === 'full') {
-                document.getElementById('scene').style.display = 'none';
+                scene.classList.add('fade-out');
+                scene.style.display = 'none';
                 document.getElementById('full-card-scene').classList.add('show');
             } else {
-                document.getElementById('scene').style.display = 'flex';
+                scene.style.display = 'flex';
+                // Force reflow
+                scene.offsetHeight;
+                scene.classList.remove('fade-out');
             }
         }
 
@@ -1150,57 +1149,99 @@
         }
 
         // ══════════ AUDIO PLAYER ══════════
-        let audioPlayer = null;
+        let ytPlayer = null;
+        let ytPlayerReady = false;
         let musicPlaying = false;
 
-        function initAudio() {
-            audioPlayer = document.getElementById('audio-player');
-            if (audioPlayer) {
-                audioPlayer.volume = 0.7;
-                audioPlayer.currentTime = 5; // Bắt đầu từ giây thứ 5
+        // Tải YouTube Iframe Player API bất đồng bộ
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        window.onYouTubeIframeAPIReady = function () {
+            ytPlayer = new YT.Player('yt-player', {
+                height: '100',
+                width: '100',
+                videoId: 'd3hXxAAuP2U',
+                playerVars: {
+                    'playsinline': 1,
+                    'start': 51,
+                    'loop': 1,
+                    'playlist': 'd3hXxAAuP2U',
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        };
+
+        function onPlayerReady(event) {
+            ytPlayerReady = true;
+            ytPlayer.setVolume(70);
+
+            // Nếu người dùng đã mở phong bì trước khi player load xong, tự động phát
+            if (musicPlaying) {
+                playYTSong();
             }
+        }
+
+        function onPlayerStateChange(event) {
+            // Đảm bảo loop hoạt động chính xác (quay lại giây thứ 51 khi hết bài)
+            if (event.data === YT.PlayerState.ENDED) {
+                if (ytPlayer && ytPlayerReady) {
+                    ytPlayer.seekTo(51);
+                    ytPlayer.playVideo();
+                }
+            }
+        }
+
+        function playYTSong() {
+            if (ytPlayer && ytPlayerReady) {
+                ytPlayer.seekTo(51);
+                ytPlayer.playVideo();
+                musicPlaying = true;
+                document.getElementById('music-bar').classList.add('visible');
+                document.getElementById('music-toggle').textContent = '⏸';
+                document.getElementById('music-bar').classList.remove('paused');
+            }
+        }
+
+        function initAudio() {
+            // Không làm gì, YouTube player được tự động khởi tạo qua API
         }
 
         function startMusic() {
-            if (!audioPlayer) initAudio();
-            if (audioPlayer && !musicPlaying) {
-                audioPlayer.play().then(() => {
-                    musicPlaying = true;
-                    document.getElementById('music-bar').classList.add('visible');
-                    document.getElementById('music-toggle').textContent = '⏸';
-                    document.getElementById('music-bar').classList.remove('paused');
-                }).catch(err => {
-                    console.log("Audio play blocked or failed:", err);
-                    document.getElementById('music-bar').classList.add('visible');
-                    document.getElementById('music-toggle').textContent = '▶';
-                    document.getElementById('music-bar').classList.add('paused');
-                });
+            musicPlaying = true;
+            if (ytPlayer && ytPlayerReady) {
+                playYTSong();
+            } else {
+                // Hiển thị thanh nhạc trước, nhạc sẽ phát ngay khi player sẵn sàng
+                document.getElementById('music-bar').classList.add('visible');
+                document.getElementById('music-toggle').textContent = '⏸';
+                document.getElementById('music-bar').classList.remove('paused');
             }
         }
 
-        // Tự động phát nhạc khi người dùng tương tác lần đầu với trang
-        function tryAutoPlay() {
-            if (!musicPlaying) startMusic();
-            document.removeEventListener('click', tryAutoPlay);
-            document.removeEventListener('touchstart', tryAutoPlay);
-        }
-
         function toggleMusic() {
-            if (!audioPlayer) initAudio();
-            if (!audioPlayer) return;
+            if (!ytPlayer || !ytPlayerReady) return;
             if (musicPlaying) {
-                audioPlayer.pause();
+                ytPlayer.pauseVideo();
                 musicPlaying = false;
                 document.getElementById('music-toggle').textContent = '▶';
                 document.getElementById('music-bar').classList.add('paused');
             } else {
-                audioPlayer.play().then(() => {
-                    musicPlaying = true;
-                    document.getElementById('music-toggle').textContent = '⏸';
-                    document.getElementById('music-bar').classList.remove('paused');
-                }).catch(err => {
-                    console.log("Play failed:", err);
-                });
+                ytPlayer.playVideo();
+                musicPlaying = true;
+                document.getElementById('music-toggle').textContent = '⏸';
+                document.getElementById('music-bar').classList.remove('paused');
             }
         }
 
